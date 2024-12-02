@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Kanban Board</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>Kanban Board</h1>
+    <a href="/tasks/add">Add Task</a>
+    <div class="kanban">
+        <div>
+            <h2>To Do</h2>
+            <% tasks.filter(task => task.status === 'To Do').forEach(task => { %>
+                <div class="task">
+                    <h3><%= task.title %></h3>
+                    <p><%= task.description %></p>
+                    <form method="POST" action="/tasks/update/<%= task._id %>">
+                        <select name="status">
+                            <option value="In Progress">In Progress</option>
+                            <option value="Done">Done</option>
+                        </select>
+                        <button>Update</button>
+                    </form>
+                    <form method="POST" action="/tasks/delete/<%= task._id %>">
+                        <button>Delete</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+        <div>
+            <h2>In Progress</h2>
+            <% tasks.filter(task => task.status === 'In Progress').forEach(task => { %>
+                <div class="task">
+                    <h3><%= task.title %></h3>
+                    <p><%= task.description %></p>
+                    <form method="POST" action="/tasks/update/<%= task._id %>">
+                        <select name="status">
+                            <option value="To Do">To Do</option>
+                            <option value="Done">Done</option>
+                        </select>
+                        <button>Update</button>
+                    </form>
+                    <form method="POST" action="/tasks/delete/<%= task._id %>">
+                        <button>Delete</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+        <div>
+            <h2>Done</h2>
+            <% tasks.filter(task => task.status === 'Done').forEach(task => { %>
+                <div class="task">
+                    <h3><%= task.title %></h3>
+                    <p><%= task.description %></p>
+                    <form method="POST" action="/tasks/delete/<%= task._id %>">
+                        <button>Delete</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</body>
+</html>
